@@ -37,8 +37,7 @@ function autorized() {
     checkAuth();
 
   }
-  console.log('auto');
-
+  
   userName.textContent = login;
   buttonAuth.style.display = 'none';
   userName.style.display = 'inline';
@@ -48,8 +47,7 @@ function autorized() {
 }
 
 function notAutorized() {
-  console.log('notauto');
-
+ 
   function logIn(event) {
     event.preventDefault();
     login = loginInput.value;
