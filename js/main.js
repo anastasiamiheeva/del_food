@@ -21,12 +21,13 @@ const buttonOut = document.querySelector('.button-out')
 
 let login = localStorage.getItem('gloDelivery');
 
-function toogleModalAuth() {
+function toggleModalAuth() {
+  loginInput.style.borderColor = '';
   modalAuth.classList.toggle('is-open')
 }
 
 function autorized() {
-
+  loginInput.style.borderColor = '';
   function logOut() {
     login = null;
     localStorage.removeItem('gloDelivery');
@@ -35,7 +36,6 @@ function autorized() {
     buttonOut.style.display = '';
     buttonOut.removeEventListener('click', logOut);
     checkAuth();
-
   }
   
   userName.textContent = login;
@@ -46,21 +46,32 @@ function autorized() {
   
 }
 
+function maskInput(string) {
+  return !!string.trim();
+}
+
 function notAutorized() {
  
   function logIn(event) {
     event.preventDefault();
-    login = loginInput.value;
-    localStorage.setItem('gloDelivery', login) // добавляем значение в localStorage
-    toogleModalAuth();
-    buttonAuth.removeEventListener('click', toogleModalAuth);
-    closeAuth.removeEventListener('click', toogleModalAuth);
-    logInForm.removeEventListener('submit', logIn);
-    logInForm.reset()
-    checkAuth()
+  
+    if (maskInput(loginInput.value)) {
+      
+      login = loginInput.value;
+      localStorage.setItem('gloDelivery', login) // добавляем значение в localStorage
+      toggleModalAuth();
+      buttonAuth.removeEventListener('click', toggleModalAuth);
+      closeAuth.removeEventListener('click', toggleModalAuth);
+      logInForm.removeEventListener('submit', logIn);
+      logInForm.reset()
+      
+      checkAuth()
+    } else {
+      loginInput.style.borderColor = 'red'
+    }
   }
-  buttonAuth.addEventListener('click', toogleModalAuth);
-  closeAuth.addEventListener('click', toogleModalAuth);
+  buttonAuth.addEventListener('click', toggleModalAuth);
+  closeAuth.addEventListener('click', toggleModalAuth);
   logInForm.addEventListener('submit', logIn) 
 }
 
